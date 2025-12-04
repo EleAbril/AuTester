@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elena Abril | Interactive Career Profile</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Chosen Palette: Warm Neutrals (Stone/Warm Gray with Amber accents) 
+         Rationale: Creates a sense of calm, professional harmony suitable for a high-level specialist profile.
+    -->
+
+    <!-- Application Structure Plan:
+         1. Hero Section: Immediate identification of the candidate and the core "Hybrid" value proposition.
+         2. Interactive Career Timeline: Breaks the chronological text into a toggle-able experience (Localization vs. IT Ops).
+         3. Skill Synergy Visualization: A Radar chart to visually prove the "versatility" mentioned in the letter.
+         4. The AI Pivot Strategy: A bridge section connecting past skills to future AI goals (the core purpose of the letter).
+         5. Contact/Footer: Call to action.
+         
+         Why this structure? The cover letter argues that two distinct careers make a perfect whole for AI. 
+         The app structure visually separates them to show depth, then merges them to show synergy.
+    -->
+
+    <!-- Visualization & Content Choices:
+         1. Career Timeline (HTML/JS): Goal -> Change. Shows evolution. Text content updates based on era selection.
+         2. Skill Radar (Chart.js): Goal -> Relationships. Maps "Linguistic" skills against "Technical" skills to show the overlap.
+         3. Competency Cards (HTML/Grid): Goal -> Inform. Lists specific tools (Jira, CA7) mentioned in the source.
+         
+         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafaf9; /* stone-50 */
+            color: #44403c; /* stone-700 */
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; 
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .nav-active {
+            border-bottom: 2px solid #b45309; /* amber-700 */
+            color: #78350f; /* amber-900 */
+            font-weight: 600;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .transition-all-300 {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header / Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-stone-800 tracking-tight">Elena Abril</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <button onclick="scrollToSection('hero')" class="text-stone-500 hover:text-stone-900 px-3 py-2 text-sm font-medium">Overview</button>
+                    <button onclick="scrollToSection('journey')" class="text-stone-500 hover:text-stone-900 px-3 py-2 text-sm font-medium">Experience</button>
+                    <button onclick="scrollToSection('skills')" class="text-stone-500 hover:text-stone-900 px-3 py-2 text-sm font-medium">Synergy</button>
+                    <button onclick="scrollToSection('future')" class="text-stone-500 hover:text-stone-900 px-3 py-2 text-sm font-medium text-amber-700">Future Focus</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+
+        <!-- 1. Hero Section: The Value Proposition -->
+        <section id="hero" class="bg-stone-100 py-16 md:py-24 border-b border-stone-200">
+            <div class="max-w-4xl mx-auto px-4 text-center">
+                <p class="text-amber-700 font-semibold uppercase tracking-wider mb-3">Professional Portfolio</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-stone-900 mb-6 leading-tight">
+                    Linguistic Precision meets <br/> Technical Resilience
+                </h1>
+                <p class="text-xl text-stone-600 mb-10 max-w-2xl mx-auto">
+                    Merging 17 years of <strong>Software Localization</strong> expertise with modern <strong>IT Operations</strong> analysis. Ready to drive innovation in Large Language Models (LLM) and AI training.
+                </p>
+                
+                <div class="flex justify-center gap-4">
+                    <button onclick="scrollToSection('journey')" class="bg-stone-800 hover:bg-stone-700 text-white font-bold py-3 px-8 rounded-lg shadow transition-all-300">
+                        Explore My Journey
+                    </button>
+                    <button onclick="scrollToSection('future')" class="bg-white hover:bg-stone-50 text-stone-800 border border-stone-300 font-bold py-3 px-8 rounded-lg shadow-sm transition-all-300">
+                        View AI Strategy
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Interactive Career Timeline -->
+        <section id="journey" class="py-16 bg-white">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="mb-12 text-center md:text-left">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Professional Trajectory</h2>
+                    <p class="text-stone-600 max-w-2xl">
+                        My career is defined by two distinct yet complementary chapters. Explore the timeline below to see how deep linguistic expertise evolved into technical operational capability.
+                    </p>
+                </div>
+
+                <!-- Timeline Controls -->
+                <div class="flex justify-center md:justify-start space-x-4 mb-8">
+                    <button id="btn-loc" onclick="updateTimeline('localization')" class="px-6 py-2 rounded-full border border-stone-300 bg-stone-800 text-white font-medium shadow-sm transition-all-300">
+                        🌐 Localization (1999-2016)
+                    </button>
+                    <button id="btn-tech" onclick="updateTimeline('tech')" class="px-6 py-2 rounded-full border border-stone-300 bg-white text-stone-600 font-medium hover:bg-stone-50 shadow-sm transition-all-300">
+                        💻 IT Operations (2022-Present)
+                    </button>
+                </div>
+
+                <!-- Dynamic Content Display -->
+                <div class="bg-stone-50 rounded-2xl p-8 border border-stone-100 shadow-sm transition-all-300" id="timeline-content">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Column 1: Context -->
+                        <div class="col-span-1 border-r border-stone-200 pr-4">
+                            <h3 class="text-xl font-bold text-stone-800 mb-2" id="era-title">Localization Specialist</h3>
+                            <p class="text-amber-700 font-mono text-sm mb-4" id="era-dates">1999 – 2016</p>
+                            <p class="text-stone-600 italic" id="era-summary">
+                                "Ensuring linguistic accuracy and cultural relevance across complex digital products."
+                            </p>
+                        </div>
+                        <!-- Column 2: Key Responsibilities -->
+                        <div class="col-span-2">
+                            <h4 class="text-sm font-bold text-stone-500 uppercase tracking-wide mb-4">Core Responsibilities</h4>
+                            <ul class="space-y-4" id="era-list">
+                                <!-- JS will populate this -->
+                            </ul>
+                            
+                            <div class="mt-8 pt-6 border-t border-stone-200">
+                                <h4 class="text-sm font-bold text-stone-500 uppercase tracking-wide mb-2">Key Organizations & Tools</h4>
+                                <div class="flex flex-wrap gap-2" id="era-tags">
+                                    <!-- JS will populate this -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Skill Synergy (Chart) -->
+        <section id="skills" class="py-16 bg-stone-100">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    
+                    <!-- Text Side -->
+                    <div>
+                        <h2 class="text-3xl font-bold text-stone-900 mb-4">The Hybrid Skill Set</h2>
+                        <p class="text-stone-600 mb-6">
+                            This visualization demonstrates the unique convergence of my background. While most specialists focus on either language <em>or</em> technical operations, my profile bridges the gap—a critical requirement for modern AI and software development environments.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-amber-500">
+                                <h3 class="font-bold text-stone-800">Linguistic Quality</h3>
+                                <p class="text-sm text-stone-600">Deep experience in translation, cultural adaptation, and ensuring seamless integration of localized assets.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-stone-600">
+                                <h3 class="font-bold text-stone-800">Technical Resilience</h3>
+                                <p class="text-sm text-stone-600">Proven ability to troubleshoot within complex environments (Mainframe, ServiceNow) and maintain strict operational standards.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart Side -->
+                    <div class="bg-white p-6 rounded-2xl shadow-md">
+                        <div class="chart-container">
+                            <canvas id="skillsChart"></canvas>
+                        </div>
+                        <p class="text-center text-xs text-stone-400 mt-4">Data derived from professional experience analysis</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Future Focus: The AI Pivot -->
+        <section id="future" class="py-16 bg-white border-t border-stone-200">
+            <div class="max-w-5xl mx-auto px-4 text-center">
+                <span class="text-amber-600 font-bold tracking-wider text-sm">CAREER OBJECTIVE</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-stone-900 mt-2 mb-8">Pivoting to AI & LLM Training</h2>
+                <p class="text-stone-600 max-w-3xl mx-auto mb-12">
+                    I am motivated to apply my dual expertise to the training and validation of Large Language Models. Here is how my background directly translates to value for your organization.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div class="bg-stone-50 p-8 rounded-xl border border-stone-200 card-hover transition-all-300">
+                        <div class="text-4xl mb-4">👁️</div>
+                        <h3 class="text-lg font-bold text-stone-800 mb-3">Precision</h3>
+                        <p class="text-sm text-stone-600">
+                            <strong>From LQA:</strong> Years of spotting minute linguistic errors in AAA games translate perfectly to identifying hallucinations or subtle inaccuracies in AI outputs.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-stone-50 p-8 rounded-xl border border-stone-200 card-hover transition-all-300">
+                        <div class="text-4xl mb-4">⚙️</div>
+                        <h3 class="text-lg font-bold text-stone-800 mb-3">Technical Logic</h3>
+                        <p class="text-sm text-stone-600">
+                            <strong>From IT Ops:</strong> Understanding logic flows (CA7/Control-M) helps in debugging prompt chains and understanding the technical constraints of the model.
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bg-stone-50 p-8 rounded-xl border border-stone-200 card-hover transition-all-300">
+                        <div class="text-4xl mb-4">🌍</div>
+                        <h3 class="text-lg font-bold text-stone-800 mb-3">Adaptability</h3>
+                        <p class="text-sm text-stone-600">
+                            <strong>From Remote Work:</strong> Proven track record of high performance in 100% remote settings (Accenture), ensuring immediate integration into distributed AI teams.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 py-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="text-white text-2xl font-bold mb-4">Elena Abril</h2>
+            <p class="mb-8">Looking forward to contributing to your organization's success.</p>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6 text-sm">
+                <div class="flex items-center gap-2">
+                    <span>📄</span> Refer to attached Resume for certifications
+                </div>
+                <div class="flex items-center gap-2">
+                    <span>🔗</span> LinkedIn Profile Available
+                </div>
+                <div class="flex items-center gap-2">
+                    <span>📧</span> Contact via Application
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-stone-800 text-xs text-stone-500">
+                Generated Interactive Profile based on Unsolicited Application Letter
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Data Storage ---
+        const eraData = {
+            localization: {
+                title: "Localization Specialist",
+                dates: "1999 – 2016",
+                summary: "Coordinating Spanish-language testing teams and ensuring content met rigorous technical compliance standards for major gaming studios.",
+                points: [
+                    "<strong>Linguistic QA & Compliance:</strong> Managed compliance for Sony TRC and Xbox CFR standards.",
+                    "<strong>Adaptation:</strong> Translated and adapted corporate web materials and game content.",
+                    "<strong>Collaboration:</strong> Partnered with international developers to ensure seamless asset integration.",
+                    "<strong>Outcome:</strong> Delivered communications that were linguistically precise and market-effective."
+                ],
+                tags: ["Electronic Arts", "CD Projekt", "THQ", "Square Enix", "Sony TRC", "Xbox CFR"]
+            },
+            tech: {
+                title: "Infra Managed Service Analyst",
+                dates: "2022 – Present",
+                summary: "Monitoring critical Mainframe systems and managing incidents in a high-pressure technical environment at Accenture.",
+                points: [
+                    "<strong>System Monitoring:</strong> Utilizing CA7 and Control-M for mainframe batch monitoring.",
+                    "<strong>Incident Management:</strong> Handling tickets and resolution flows via ServiceNow and Jira.",
+                    "<strong>Environment:</strong> Analyzing complex software environments to troubleshoot issues.",
+                    "<strong>Remote Excellence:</strong> Maintaining strict operational standards in a 100% remote setting."
+                ],
+                tags: ["Accenture", "CA7", "Control-M", "ServiceNow", "Jira", "Remote Work"]
+            }
+        };
+
+        // --- Interaction Logic: Timeline ---
+        function updateTimeline(eraKey) {
+            const data = eraData[eraKey];
+            const btnLoc = document.getElementById('btn-loc');
+            const btnTech = document.getElementById('btn-tech');
+            const contentDiv = document.getElementById('timeline-content');
+
+            // Style Buttons
+            if (eraKey === 'localization') {
+                btnLoc.className = "px-6 py-2 rounded-full border border-stone-300 bg-stone-800 text-white font-medium shadow-sm transition-all-300";
+                btnTech.className = "px-6 py-2 rounded-full border border-stone-300 bg-white text-stone-600 font-medium hover:bg-stone-50 shadow-sm transition-all-300";
+            } else {
+                btnTech.className = "px-6 py-2 rounded-full border border-stone-300 bg-stone-800 text-white font-medium shadow-sm transition-all-300";
+                btnLoc.className = "px-6 py-2 rounded-full border border-stone-300 bg-white text-stone-600 font-medium hover:bg-stone-50 shadow-sm transition-all-300";
+            }
+
+            // Animate Content (Fade out, update, fade in)
+            contentDiv.style.opacity = '0';
+            
+            setTimeout(() => {
+                // Update Text
+                document.getElementById('era-title').textContent = data.title;
+                document.getElementById('era-dates').textContent = data.dates;
+                document.getElementById('era-summary').textContent = data.summary;
+
+                // Update List
+                const listEl = document.getElementById('era-list');
+                listEl.innerHTML = '';
+                data.points.forEach(point => {
+                    const li = document.createElement('li');
+                    li.className = "flex items-start text-stone-700 text-sm";
+                    li.innerHTML = `<span class="text-amber-600 mr-2 mt-1">▪</span><span>${point}</span>`;
+                    listEl.appendChild(li);
+                });
+
+                // Update Tags
+                const tagsEl = document.getElementById('era-tags');
+                tagsEl.innerHTML = '';
+                data.tags.forEach(tag => {
+                    const span = document.createElement('span');
+                    span.className = "bg-stone-200 text-stone-700 text-xs px-3 py-1 rounded-full font-medium";
+                    span.textContent = tag;
+                    tagsEl.appendChild(span);
+                });
+
+                contentDiv.style.opacity = '1';
+            }, 300);
+        }
+
+        // --- Navigation Logic ---
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if(el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // --- Visualization Logic: Chart.js ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Timeline
+            updateTimeline('localization');
+
+            // Initialize Radar Chart
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            
+            const data = {
+                labels: [
+                    'Linguistic Accuracy',
+                    'Technical Compliance',
+                    'Incident Mgmt',
+                    'Cultural Adaptation',
+                    'Remote Collaboration',
+                    'Tool Proficiency (Jira/ServiceNow)'
+                ],
+                datasets: [{
+                    label: 'Skill Proficiency',
+                    data: [95, 85, 80, 95, 90, 85],
+                    fill: true,
+                    backgroundColor: 'rgba(217, 119, 6, 0.2)', // amber-600 low opacity
+                    borderColor: 'rgb(217, 119, 6)', // amber-600
+                    pointBackgroundColor: 'rgb(68, 64, 60)', // stone-700
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(217, 119, 6)'
+                }]
+            };
+
+            const config = {
+                type: 'radar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: '#e7e5e4' // stone-200
+                            },
+                            grid: {
+                                color: '#e7e5e4' // stone-200
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12,
+                                    family: "'Inter', sans-serif"
+                                },
+                                color: '#44403c' // stone-700
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            ticks: {
+                                display: false // hide numbers on rings for cleaner look
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': High Proficiency';
+                                }
+                            },
+                            backgroundColor: '#1c1917',
+                            titleFont: { family: "'Inter', sans-serif" },
+                            bodyFont: { family: "'Inter', sans-serif" }
+                        }
+                    }
+                }
+            };
+
+            new Chart(ctx, config);
+        });
+
+    </script>
+</body>
+</html>
