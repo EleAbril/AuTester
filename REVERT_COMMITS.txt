@@ -1,0 +1,4 @@
+commit a2462fd > Revert "Commit message 4"
+commit bca75f8 > Revert "Commit message 3"
+commit d5f8b83 > Revert "Commit message 2"
+commit 282fb51 > Revert "Commit message 1"
