@@ -4,21 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AuTester</title>
-    <script src="https://credly.com/notifications/script.js" async></script> <!-- Credly badge embed script added -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-    <main>
-        ...
-        <!-- Certifications section added -->
-        <section id="certifications">
-            <h2>Certifications</h2>
-            <p>Check my IBM certification badge:</p>
-            <credly:badge id="YOUR_BADGE_ID_HERE"></credly:badge>
-        </section>
-        
-    </main>
-    <nav>
-        <button onclick="location.href='#certifications';">View Certifications</button>
-    </nav>
+    <header class="bg-gray-800 text-white">
+        <nav class="container mx-auto px-4 py-4">
+            <ul class="flex space-x-4">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#journey">Journey</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#future-focus">Future Focus</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <h1 class="text-4xl font-bold">Welcome to AuTester</h1>
+    </section>
+
+    <section id="journey">
+        <h2 class="text-3xl">My Journey</h2>
+        <p>Details about the journey...</p>
+    </section>
+
+    <section id="skills">
+        <h2 class="text-3xl">Skills</h2>
+        <p>Details about skills...</p>
+    </section>
+
+    <section id="certifications">
+        <h2 class="text-3xl">Certifications</h2>
+        <div class="credly-badge">
+            <script src="https://credly.com/v1.0/badges/put-your-badge-id-here/embed.js"></script>
+        </div>
+    </section>
+
+    <section id="future-focus">
+        <h2 class="text-3xl">Future Focus</h2>
+        <p>Details about future focus...</p>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Existing JavaScript functionality
+    </script>
 </body>
 </html>
