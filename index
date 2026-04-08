@@ -3,172 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elena Abril | Interactive Career Profile</title>
+    <title>Elena Abril | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #1a1a1a; }
+        .chart-container { position: relative; width: 100%; max-width: 500px; margin: auto; height: 300px; }
         
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fafaf9; /* stone-50 */
-            color: #44403c; /* stone-700 */
-        }
-
-        .chart-container {
+        /* ESTILOS PERSONALIZADOS PARA LA TARJETA DE PERFIL */
+        .profile-card {
             position: relative;
-            width: 100%;
-            max-width: 600px; 
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 400px;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 120px; /* Ancho de la foto y contenedor */
+            border-radius: 12px;
+            overflow: hidden; /* Corta la imagen y el overlay */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px border border-gray-100;
         }
         
-        .transition-all-300 {
-            transition: all 0.3s ease-in-out;
+        .profile-photo {
+            width: 100%;
+            height: 120px; /* Foto cuadrada */
+            object-cover: cover;
+        }
+        
+        /* Degradado oscuro en la base de la foto para que el nombre blanco sea legible */
+        .profile-name-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            color: #ffffff;
+            padding: 10px 8px 6px 8px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        /* Contenedor del badge debajo de la foto */
+        .badge-container {
+            margin-top: 8px;
+            text-align: center;
+            width: 120px; /* Mismo ancho que la foto */
+            transform: scale(0.65); /* Escala discreta del badge */
+            transform-origin: top center;
         }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24">
-                <div class="flex items-center gap-4">
-                    <span class="text-2xl font-bold text-stone-800 tracking-tight">Elena Abril</span>
-                    
-                    <div class="hidden sm:block transform scale-50 origin-left -ml-4">
-                        <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="68f469ee-e435-4729-be0c-0d4c6a7872b6" data-share-badge-host="https://www.credly.com"></div>
-                        <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-                    </div>
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 h-28 flex justify-between items-center">
+            
+            <div class="flex flex-col items-center gap-0">
+                
+                <div class="profile-card">
+                    <img src="https://www.canva.com/M/MAHGIXHVa3A" alt="Elena Abril" class="profile-photo">
+                    <div class="profile-name-overlay">Elena Abril</div>
                 </div>
-
-                <nav class="hidden md:flex items-center space-x-8">
-                    <button onclick="scrollToSection('hero')" class="text-stone-500 hover:text-stone-900 px-3 py-2 text-sm font-medium">Overview</button>
-                    <button onclick="scrollToSection('journey')" class="text-stone-500 hover:text-stone-900 px-3 py-2 text-sm font-medium">Experience</button>
-                    <button onclick="scrollToSection('future')" class="text-stone-500 hover:text-stone-900 px-3 py-2 text-sm font-medium text-amber-700">Future Focus</button>
-                    
-                    <div class="ml-4">
-                        <img src="https://www.canva.com/M/MAHGIXHVa3A" alt="Elena Abril" class="h-14 w-14 rounded-full border-2 border-stone-200 object-cover shadow-sm">
-                    </div>
-                </nav>
+                
+                <div class="badge-container">
+                    <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="68f469ee-e435-4729-be0c-0d4c6a7872b6" data-share-badge-host="https://www.credly.com"></div>
+                    <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+                </div>
             </div>
+
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <button onclick="scrollToSection('hero')" class="hover:text-gray-500">Overview</button>
+                <button onclick="scrollToSection('journey')" class="hover:text-gray-500">Experience</button>
+                <button onclick="scrollToSection('future')" class="text-black border-b-2 border-black pb-1">Future Focus</button>
+            </nav>
         </div>
     </header>
 
     <main class="flex-grow">
-        <section id="hero" class="bg-stone-100 py-16 md:py-24 border-b border-stone-200">
-            <div class="max-w-4xl mx-auto px-4 text-center">
-                <p class="text-amber-700 font-semibold uppercase tracking-wider mb-3">Professional Portfolio</p>
-                <h1 class="text-4xl md:text-5xl font-bold text-stone-900 mb-6 leading-tight">
-                    Linguistic Precision meets <br/> Technical Resilience
-                </h1>
-                <p class="text-xl text-stone-600 mb-10 max-w-2xl mx-auto">
-                    Merging 17 years of <strong>Software Localization</strong> expertise with modern <strong>IT Operations</strong> analysis. Ready to drive innovation in Large Language Models (LLM) and AI training.
-                </p>
-                
-                <div class="flex justify-center gap-4">
-                    <button onclick="scrollToSection('journey')" class="bg-stone-800 hover:bg-stone-700 text-white font-bold py-3 px-8 rounded-lg shadow transition-all-300">
-                        Explore My Journey
-                    </button>
-                    <button onclick="scrollToSection('future')" class="bg-white hover:bg-stone-50 text-stone-800 border border-stone-300 font-bold py-3 px-8 rounded-lg shadow-sm transition-all-300">
-                        View AI Strategy
-                    </button>
-                </div>
+        <section id="hero" class="py-24 text-center bg-gray-50">
+            <div class="max-w-4xl mx-auto px-4">
+                <h1 class="text-5xl font-extrabold mb-6">Linguistic Precision meets Technical Resilience</h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-10">Merging 17 years of Software Localization with modern IT Operations analysis.</p>
+                <button onclick="scrollToSection('journey')" class="bg-black text-white px-8 py-3 rounded-md font-semibold hover:bg-gray-800 transition-all">Explore Journey</button>
             </div>
         </section>
 
-        <section id="journey" class="py-16 bg-white">
-            <div class="max-w-6xl mx-auto px-4">
-                <div class="mb-12 text-center md:text-left">
-                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Professional Trajectory</h2>
-                </div>
-
-                <div class="flex justify-center md:justify-start space-x-4 mb-8">
-                    <button id="btn-loc" onclick="updateTimeline('localization')" class="px-6 py-2 rounded-full border border-stone-300 bg-stone-800 text-white font-medium shadow-sm transition-all-300">
-                        🌐 Localization (1999-2016)
-                    </button>
-                    <button id="btn-tech" onclick="updateTimeline('tech')" class="px-6 py-2 rounded-full border border-stone-300 bg-white text-stone-600 font-medium hover:bg-stone-50 shadow-sm transition-all-300">
-                        💻 IT Operations (2022-Present)
-                    </button>
-                </div>
-
-                <div class="bg-stone-50 rounded-2xl p-8 border border-stone-100 shadow-sm transition-all-300" id="timeline-content">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="col-span-1 border-r border-stone-200 pr-4">
-                            <h3 class="text-xl font-bold text-stone-800 mb-2" id="era-title">Localization Specialist</h3>
-                            <p class="text-amber-700 font-mono text-sm mb-4" id="era-dates">1999 – 2016</p>
-                            <p class="text-stone-600 italic" id="era-summary"></p>
-                        </div>
-                        <div class="col-span-2">
-                            <ul class="space-y-4" id="era-list"></ul>
-                            <div class="mt-8 pt-6 border-t border-stone-200">
-                                <div class="flex flex-wrap gap-2" id="era-tags"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <section id="journey" class="py-16 max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-10 text-center">Professional Trajectory</h2>
+            <div class="flex justify-center space-x-4 mb-10">
+                <button onclick="updateTimeline('localization')" id="btn-loc" class="px-6 py-2 bg-black text-white rounded-full text-sm">🌐 Localization</button>
+                <button onclick="updateTimeline('tech')" id="btn-tech" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-full text-sm">💻 IT Operations</button>
             </div>
-        </section>
-
-        <section id="skills" class="py-16 bg-stone-100">
-            <div class="max-w-6xl mx-auto px-4">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <h2 class="text-3xl font-bold text-stone-900 mb-4">The Hybrid Skill Set</h2>
-                        <div class="space-y-4">
-                            <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-amber-500">
-                                <h3 class="font-bold text-stone-800">Linguistic Quality</h3>
-                                <p class="text-sm text-stone-600">Deep experience in translation and cultural adaptation.</p>
-                            </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-stone-600">
-                                <h3 class="font-bold text-stone-800">Technical Resilience</h3>
-                                <p class="text-sm text-stone-600">Troubleshooting in complex environments (Mainframe, ServiceNow).</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-md">
-                        <div class="chart-container">
-                            <canvas id="skillsChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="future" class="py-16 bg-white border-t border-stone-200">
-            <div class="max-w-5xl mx-auto px-4 text-center">
-                <h2 class="text-3xl font-bold text-stone-900 mb-12">Pivoting to AI & LLM Training</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-stone-50 p-8 rounded-xl border border-stone-200 card-hover transition-all-300">
-                        <h3 class="font-bold text-stone-800">Precision</h3>
-                        <p class="text-sm text-stone-600 mt-2">Identifying inaccuracies in AI outputs based on LQA expertise.</p>
-                    </div>
-                    <div class="bg-stone-50 p-8 rounded-xl border border-stone-200 card-hover transition-all-300">
-                        <h3 class="font-bold text-stone-800">Technical Logic</h3>
-                        <p class="text-sm text-stone-600 mt-2">Debugging prompt chains using IT Ops logic flows.</p>
-                    </div>
-                    <div class="bg-stone-50 p-8 rounded-xl border border-stone-200 card-hover transition-all-300">
-                        <h3 class="font-bold text-stone-800">Adaptability</h3>
-                        <p class="text-sm text-stone-600 mt-2">Proven track record in distributed and remote AI teams.</p>
-                    </div>
-                </div>
+            <div id="timeline-box" class="bg-white border border-gray-200 p-8 rounded-xl shadow-sm min-h-[250px]">
+                <h3 id="era-title" class="text-2xl font-bold mb-2"></h3>
+                <p id="era-dates" class="text-gray-500 font-mono text-sm mb-4"></p>
+                <ul id="era-list" class="space-y-3 text-gray-700"></ul>
             </div>
         </section>
     </main>
 
-    <footer class="bg-stone-900 text-stone-400 py-12 text-center">
-        <h2 class="text-white text-2xl font-bold mb-4">Elena Abril</h2>
-        <div class="mt-8 pt-8 border-t border-stone-800 text-xs">
-            Interactive Profile | IBM Z Mainframe Server
-        </div>
+    <footer id="future" class="bg-black text-white py-12 text-center">
+        <p class="text-sm opacity-50">Elena Abril | Interactive Profile Context Mainframe Z</p>
     </footer>
 
     <script>
@@ -176,16 +110,12 @@
             localization: {
                 title: "Localization Specialist",
                 dates: "1999 – 2016",
-                summary: "Coordinating Spanish-language testing teams for major gaming studios.",
-                points: ["Linguistic QA & Compliance", "Technical Adaptation", "International Collaboration"],
-                tags: ["EA", "Sony", "Xbox", "Square Enix"]
+                points: ["Linguistic QA & Compliance", "Technical Adaptation", "Testing Lead"]
             },
             tech: {
                 title: "Infra Managed Service Analyst",
                 dates: "2022 – Present",
-                summary: "Monitoring critical Mainframe systems at Accenture.",
-                points: ["System Monitoring (CA7/Control-M)", "Incident Management (Jira/ServiceNow)", "Remote Excellence"],
-                tags: ["Accenture", "Mainframe", "IT Ops", "ServiceNow"]
+                points: ["Mainframe Monitoring (CA7/Control-M)", "Incident Management", "Accenture Operations"]
             }
         };
 
@@ -193,47 +123,29 @@
             const data = eraData[eraKey];
             document.getElementById('era-title').textContent = data.title;
             document.getElementById('era-dates').textContent = data.dates;
-            document.getElementById('era-summary').textContent = data.summary;
-            
             const listEl = document.getElementById('era-list');
-            listEl.innerHTML = '';
-            data.points.forEach(point => {
-                const li = document.createElement('li');
-                li.className = "flex items-start text-stone-700 text-sm";
-                li.innerHTML = `<span class="text-amber-600 mr-2">▪</span>${point}`;
-                listEl.appendChild(li);
-            });
-
-            const tagsEl = document.getElementById('era-tags');
-            tagsEl.innerHTML = '';
-            data.tags.forEach(tag => {
-                const span = document.createElement('span');
-                span.className = "bg-stone-200 text-stone-700 text-xs px-3 py-1 rounded-full font-medium";
-                span.textContent = tag;
-                tagsEl.appendChild(span);
-            });
+            listEl.innerHTML = data.points.map(p => `<li>• ${p}</li>`).join('');
+            
+            // Actualizar botones
+            document.getElementById('btn-loc').className = eraKey === 'localization' ? 'px-6 py-2 bg-black text-white rounded-full text-sm' : 'px-6 py-2 bg-gray-200 text-gray-700 rounded-full text-sm';
+            document.getElementById('btn-tech').className = eraKey === 'tech' ? 'px-6 py-2 bg-black text-white rounded-full text-sm' : 'px-6 py-2 bg-gray-200 text-gray-700 rounded-full text-sm';
         }
 
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
+        function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
 
         document.addEventListener('DOMContentLoaded', () => {
             updateTimeline('localization');
-            const ctx = document.getElementById('skillsChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Accuracy', 'Compliance', 'Incident Mgmt', 'Adaptation', 'Remote', 'Tools'],
-                    datasets: [{
-                        data: [95, 85, 80, 95, 90, 85],
-                        backgroundColor: 'rgba(217, 119, 6, 0.2)',
-                        borderColor: 'rgb(217, 119, 6)',
-                        pointBackgroundColor: 'rgb(68, 64, 60)'
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-            });
+            const ctx = document.getElementById('skillsChart');
+            if(ctx) {
+                new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Accuracy', 'Compliance', 'Mainframe', 'Adaptation', 'Remote', 'Tools'],
+                        datasets: [{ data: [95, 85, 80, 95, 90, 85], backgroundColor: 'rgba(0,0,0,0.05)', borderColor: 'black' }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                });
+            }
         });
     </script>
 </body>
